@@ -1,0 +1,19 @@
+{
+  "name": "let-go-fruit",
+  "version": "1.0.0",
+  "description": "January Eggplant Community Jam Entry Theme: Learning to Let Go First entry in my 1GAM for 2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmkubik/let-go-fruit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmkubik/let-go-fruit/issues"
+  },
+  "homepage": "https://github.com/rmkubik/let-go-fruit#readme"
+}
