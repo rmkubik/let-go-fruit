@@ -5,7 +5,7 @@
 		"label": "tile-0",
 		"isStatic": false,
 		"density": 0.1,
-		"restitution": 0,
+		"restitution": 0.8,
 		"friction": 0.1,
 		"frictionAir": 0.01,
 		"frictionStatic": 0.5,
