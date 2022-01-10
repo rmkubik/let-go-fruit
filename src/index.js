@@ -4,6 +4,21 @@ import spriteSheetData from "../assets/spritesheet.json";
 import physicsData from "../assets/physics.json";
 import * as levels from "../assets/levels/*.json";
 
+function getTiledProperty(object, propName) {
+  return object.properties.find((prop) => prop.name === propName).value;
+}
+
+const orderedLevels = Object.entries(levels)
+  .map(([levelKey, level]) => {
+    return {
+      ...level,
+      levelKey,
+    };
+  })
+  .sort((a, b) => {
+    return getTiledProperty(a, "order") - getTiledProperty(b, "order");
+  });
+
 const width = 640;
 const height = 448;
 const marginX = 64;
@@ -53,6 +68,10 @@ let isDraggingSprite = false;
 let target = {};
 let objects = [];
 let strokes = 0;
+let currentLevelIndex = 0;
+
+// stopped, moving
+let playerState = "stopped";
 
 function createPlayer(scene, x, y) {
   const shapes = scene.cache.json.get("shapes");
@@ -81,6 +100,14 @@ function createTarget(scene, x, y, radius) {
 
 function isPlayerInTarget(scene) {
   return scene.matter.intersectBody(player.body, [target.ring2]).length > 0;
+}
+
+function isPlayerStopped() {
+  if (player.body.speed < 0.05 && player.body.angularSpeed < 0.05) {
+    return true;
+  }
+
+  return false;
 }
 
 function drawTarget(scene) {
@@ -199,7 +226,6 @@ function preload() {
 }
 
 function restart(scene) {
-  scene.scene.restart();
   graphics = {};
   line = undefined;
   player = undefined;
@@ -208,6 +234,7 @@ function restart(scene) {
   objects = [];
   strokes = 0;
   document.getElementById("strokes").innerText = strokes;
+  scene.scene.restart();
 }
 
 function create() {
@@ -224,13 +251,17 @@ function create() {
   graphics.target = this.add.graphics();
   graphics.objects = this.add.graphics();
 
-  loadLevel(this, "level2");
+  loadLevel(this, orderedLevels[currentLevelIndex].levelKey);
 
   this.matter.world.setBounds(marginX, marginY, width, height);
 
   isDraggingSprite = false;
 
   player.on("pointerdown", function (pointer) {
+    if (playerState !== "stopped") {
+      return;
+    }
+
     this.setTint(0xff0000);
     isDraggingSprite = true;
   });
@@ -246,6 +277,7 @@ function create() {
     }
 
     isDraggingSprite = false;
+    playerState = "moving";
 
     const mousePosition = new Phaser.Math.Vector2(
       pointer.position.x,
@@ -318,4 +350,22 @@ function update() {
 
   drawTarget(this);
   drawObjects(this);
+
+  if (playerState === "moving" && isPlayerStopped()) {
+    player.setVelocity(0);
+    player.setAngularVelocity(0);
+    playerState = "stopped";
+
+    if (isPlayerInTarget(this)) {
+      let newLevelIndex = currentLevelIndex + 1;
+
+      if (newLevelIndex > orderedLevels.length - 1) {
+        newLevelIndex = 0;
+      }
+
+      currentLevelIndex = newLevelIndex;
+
+      restart(this);
+    }
+  }
 }
