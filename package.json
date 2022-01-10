@@ -5,7 +5,7 @@
   "description": "January Eggplant Community Jam Entry Theme: Learning to Let Go First entry in my 1GAM for 2022.",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "npm run build:spritesheet && npm run build:phaser",
+    "build": "npm run build:phaser",
     "build:phaser": "parcel build src/index.html",
     "build:spritesheet": "TexturePacker --format phaser --data assets/spritesheet.json --sheet assets/spritesheet.png rawAssets/tiles"
   },
