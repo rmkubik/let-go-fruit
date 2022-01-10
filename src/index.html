@@ -3,11 +3,62 @@
   <head>
     <meta charset="utf-8" />
     <title>Let Go of Fruit</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Helvetica, sans-serif;
+      }
+
+      #root {
+        transform-origin: top left;
+      }
+
+      #overlay {
+        pointer-events: none;
+        position: absolute;
+        color: white;
+        margin: 0.5rem;
+        margin-left: 64px;
+
+        display: flex;
+        flex-direction: row;
+      }
+
+      #overlay p {
+        margin: 0;
+      }
+
+      #overlay > * {
+        padding: 1rem;
+        margin-right: 1rem;
+      }
+
+      #overlay input {
+        pointer-events: all;
+        cursor: pointer;
+      }
+
+      #overlay button {
+        border: 1px solid white;
+        margin: 0.5rem;
+        padding: 0.25rem;
+        background: none;
+        height: fit-content;
+        border-radius: 6px;
+        pointer-events: all;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <h1>Fruit Game.</h1>
-    <p>Strokes: <span id="strokes">0</span></p>
-    <div id="phaser"></div>
+    <div id="root">
+      <div id="overlay">
+        <p id="levelName"></p>
+        <p>Strokes: <span id="strokes">0</span></p>
+        <div>🔎<input id="zoomInput" type="range" min="0.5" max="3" step="0.25" value="1" /></div>
+        <button id="restartButton">♻️</button>
+      </div>
+      <div id="phaser"></div>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

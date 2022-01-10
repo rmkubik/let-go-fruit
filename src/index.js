@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import spriteSheetImage from "../assets/spritesheet.png";
 import spriteSheetData from "../assets/spritesheet.json";
 import physicsData from "../assets/physics.json";
-import level1Data from "../assets/levels/level1.json";
+import * as levels from "../assets/levels/*.json";
 
 const width = 640;
 const height = 448;
@@ -15,8 +15,8 @@ const config = {
   width: width + marginX * 2,
   height: height + marginY * 2,
   scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
+    // mode: Phaser.Scale.FIT,
+    // autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   scene: {
     preload: preload,
@@ -38,6 +38,12 @@ const config = {
     pixelart: true,
   },
 };
+
+document.getElementById("zoomInput").addEventListener("change", (event) => {
+  document.getElementById(
+    "root"
+  ).style.transform = `scale(${event.target.value})`;
+});
 
 const game = new Phaser.Game(config);
 let graphics = {};
@@ -140,9 +146,13 @@ function drawObjects(scene) {
 }
 
 function loadLevel(scene, levelKey) {
-  const level1 = scene.cache.json.get(levelKey);
+  const loadedLevel = levels[levelKey];
 
-  const objectLayers = level1.layers.filter(
+  document.getElementById("levelName").innerText = loadedLevel.properties.find(
+    (prop) => prop.name === "levelName"
+  ).value;
+
+  const objectLayers = loadedLevel.layers.filter(
     (layer) => layer.type === "objectgroup"
   );
 
@@ -186,11 +196,25 @@ function preload() {
 
   //  Load body shapes from JSON file generated using PhysicsEditor
   this.load.json("shapes", physicsData);
+}
 
-  this.load.json("level1", level1Data);
+function restart(scene) {
+  scene.scene.restart();
+  graphics = {};
+  line = undefined;
+  player = undefined;
+  isDraggingSprite = false;
+  target = {};
+  objects = [];
+  strokes = 0;
+  document.getElementById("strokes").innerText = strokes;
 }
 
 function create() {
+  document.getElementById("restartButton").addEventListener("click", () => {
+    restart(this);
+  });
+
   graphics.background = this.add.graphics();
   graphics.background.fillStyle(0x000000);
   graphics.background.lineStyle(2, 0xffffff);
@@ -200,7 +224,7 @@ function create() {
   graphics.target = this.add.graphics();
   graphics.objects = this.add.graphics();
 
-  loadLevel(this, "level1");
+  loadLevel(this, "level2");
 
   this.matter.world.setBounds(marginX, marginY, width, height);
 

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/rmkubik/let-go-fruit#readme",
   "devDependencies": {
+    "@parcel/resolver-glob": "^2.1.1",
     "parcel": "^2.1.1"
   },
   "dependencies": {
