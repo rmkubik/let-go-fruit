@@ -8,29 +8,6 @@
          "name":"Objects",
          "objects":[
                 {
-                 "height":32,
-                 "id":1,
-                 "name":"",
-                 "rotation":0,
-                 "type":"collider",
-                 "visible":true,
-                 "width":224,
-                 "x":64,
-                 "y":192
-                }, 
-                {
-                 "ellipse":true,
-                 "height":128,
-                 "id":2,
-                 "name":"target",
-                 "rotation":0,
-                 "type":"target",
-                 "visible":true,
-                 "width":128,
-                 "x":416,
-                 "y":256
-                }, 
-                {
                  "height":0,
                  "id":3,
                  "name":"player",
@@ -39,30 +16,31 @@
                  "type":"player",
                  "visible":true,
                  "width":0,
-                 "x":160,
-                 "y":352
-                }, 
-                {
-                 "height":256,
-                 "id":4,
-                 "name":"",
-                 "rotation":0,
-                 "type":"collider",
-                 "visible":true,
-                 "width":32,
-                 "x":288,
+                 "x":128,
                  "y":192
                 }, 
                 {
-                 "height":64,
-                 "id":5,
+                 "ellipse":true,
+                 "height":96,
+                 "id":6,
+                 "name":"target",
+                 "rotation":0,
+                 "type":"target",
+                 "visible":true,
+                 "width":96,
+                 "x":448,
+                 "y":160
+                }, 
+                {
+                 "height":192,
+                 "id":9,
                  "name":"",
                  "rotation":0,
                  "type":"collider",
                  "visible":true,
                  "width":32,
                  "x":288,
-                 "y":0
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -71,18 +49,18 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":6,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "properties":[
         {
          "name":"levelName",
          "type":"string",
-         "value":"Level 4"
+         "value":"Level 2"
         }, 
         {
          "name":"order",
          "type":"int",
-         "value":3
+         "value":1
         }],
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

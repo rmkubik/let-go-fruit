@@ -237,7 +237,22 @@ function restart(scene) {
   scene.scene.restart();
 }
 
+function loadNextLevel(scene) {
+  let newLevelIndex = currentLevelIndex + 1;
+
+  if (newLevelIndex > orderedLevels.length - 1) {
+    newLevelIndex = 0;
+  }
+
+  currentLevelIndex = newLevelIndex;
+
+  restart(scene);
+}
+
 function create() {
+  // Log this function so I can skip levels in dev
+  console.log({ skipLevel: () => loadNextLevel(this) });
+
   document.getElementById("restartButton").addEventListener("click", () => {
     restart(this);
   });
@@ -357,15 +372,7 @@ function update() {
     playerState = "stopped";
 
     if (isPlayerInTarget(this)) {
-      let newLevelIndex = currentLevelIndex + 1;
-
-      if (newLevelIndex > orderedLevels.length - 1) {
-        newLevelIndex = 0;
-      }
-
-      currentLevelIndex = newLevelIndex;
-
-      restart(this);
+      loadNextLevel(this);
     }
   }
 }

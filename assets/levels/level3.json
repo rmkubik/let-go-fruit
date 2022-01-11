@@ -8,29 +8,6 @@
          "name":"Objects",
          "objects":[
                 {
-                 "height":160,
-                 "id":1,
-                 "name":"",
-                 "rotation":0,
-                 "type":"collider",
-                 "visible":true,
-                 "width":96,
-                 "x":256,
-                 "y":0
-                }, 
-                {
-                 "ellipse":true,
-                 "height":64,
-                 "id":2,
-                 "name":"target",
-                 "rotation":0,
-                 "type":"target",
-                 "visible":true,
-                 "width":64,
-                 "x":480,
-                 "y":96
-                }, 
-                {
                  "height":0,
                  "id":3,
                  "name":"player",
@@ -39,19 +16,20 @@
                  "type":"player",
                  "visible":true,
                  "width":0,
-                 "x":128,
-                 "y":96
+                 "x":192,
+                 "y":192
                 }, 
                 {
-                 "height":160,
-                 "id":4,
-                 "name":"",
+                 "ellipse":true,
+                 "height":96,
+                 "id":6,
+                 "name":"target",
                  "rotation":0,
-                 "type":"collider",
+                 "type":"target",
                  "visible":true,
                  "width":96,
-                 "x":256,
-                 "y":288
+                 "x":288,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -60,18 +38,18 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":5,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "properties":[
         {
          "name":"levelName",
          "type":"string",
-         "value":"Level 3"
+         "value":"Level 1"
         }, 
         {
          "name":"order",
          "type":"int",
-         "value":2
+         "value":0
         }],
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
