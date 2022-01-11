@@ -69,6 +69,7 @@ let target = {};
 let objects = [];
 let strokes = 0;
 let currentLevelIndex = 0;
+let scene;
 
 // stopped, moving
 let playerState = "stopped";
@@ -217,14 +218,6 @@ function loadLevel(scene, levelKey) {
   });
 }
 
-function preload() {
-  //  Load sprite sheet generated with TexturePacker
-  this.load.atlas("fruits", spriteSheetImage, spriteSheetData);
-
-  //  Load body shapes from JSON file generated using PhysicsEditor
-  this.load.json("shapes", physicsData);
-}
-
 function restart(scene) {
   graphics = {};
   line = undefined;
@@ -249,14 +242,25 @@ function loadNextLevel(scene) {
   restart(scene);
 }
 
+document
+  .getElementById("skipButton")
+  .addEventListener("click", () => loadNextLevel(scene));
+
+document.getElementById("restartButton").addEventListener("click", () => {
+  restart(scene);
+});
+
+function preload() {
+  //  Load sprite sheet generated with TexturePacker
+  this.load.atlas("fruits", spriteSheetImage, spriteSheetData);
+
+  //  Load body shapes from JSON file generated using PhysicsEditor
+  this.load.json("shapes", physicsData);
+
+  scene = this;
+}
+
 function create() {
-  // Log this function so I can skip levels in dev
-  console.log({ skipLevel: () => loadNextLevel(this) });
-
-  document.getElementById("restartButton").addEventListener("click", () => {
-    restart(this);
-  });
-
   graphics.background = this.add.graphics();
   graphics.background.fillStyle(0x000000);
   graphics.background.lineStyle(2, 0xffffff);
