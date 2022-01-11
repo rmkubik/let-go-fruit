@@ -48,6 +48,25 @@
         pointer-events: all;
         cursor: pointer;
       }
+
+      #victory {
+        position: absolute;
+        /* width: 100%;
+        height: 100%; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(22, 22, 22, 0.75);
+
+        font-size: large;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+
+        /* Hide victory overlay until player wins */
+        pointer-events: none;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -59,7 +78,9 @@
         <button id="restartButton">♻️</button>
         <button id="skipButton">⏭</button>
       </div>
-      <div id="phaser"></div>
+      <div id="phaser">
+        <div id="victory">Victory! Click for next level.</div>
+      </div>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

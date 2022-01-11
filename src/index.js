@@ -111,6 +111,15 @@ function isPlayerStopped() {
   return false;
 }
 
+function isMouseInPlayer(scene) {
+  const { activePointer } = scene.input;
+
+  return (
+    scene.matter.intersectPoint(activePointer.x, activePointer.y, [player.body])
+      .length > 0
+  );
+}
+
 function drawTarget(scene) {
   // graphics.target.fillStyle(0x0000ff);
   // graphics.target.fillCircle(
@@ -242,12 +251,33 @@ function loadNextLevel(scene) {
   restart(scene);
 }
 
+function showVictoryOverlay() {
+  const victoryOverlay = document.getElementById("victory");
+  victoryOverlay.style.display = "flex";
+  victoryOverlay.style.pointerEvents = "all";
+
+  // Position/size victory overlay based on game dimensions
+  victoryOverlay.style.width = `${width + marginX * 2}px`;
+  victoryOverlay.style.height = `${height + marginY * 2}px`;
+}
+
+function hideVictoryOverlay() {
+  const victoryOverlay = document.getElementById("victory");
+  victoryOverlay.style.display = "none";
+  victoryOverlay.style.pointerEvents = "none";
+}
+
 document
   .getElementById("skipButton")
   .addEventListener("click", () => loadNextLevel(scene));
 
 document.getElementById("restartButton").addEventListener("click", () => {
   restart(scene);
+});
+
+document.getElementById("victory").addEventListener("click", () => {
+  loadNextLevel(scene);
+  hideVictoryOverlay();
 });
 
 function preload() {
@@ -367,6 +397,18 @@ function update() {
     graphics.line.strokeLineShape(line);
   }
 
+  if (isMouseInPlayer(this)) {
+    if (playerState === "moving") {
+      document.querySelector("body").style.cursor = "default";
+    } else {
+      document.querySelector("body").style.cursor = "grab";
+    }
+  } else if (isDraggingSprite) {
+    document.querySelector("body").style.cursor = "grabbing";
+  } else {
+    document.querySelector("body").style.cursor = "default";
+  }
+
   drawTarget(this);
   drawObjects(this);
 
@@ -375,8 +417,17 @@ function update() {
     player.setAngularVelocity(0);
     playerState = "stopped";
 
+    this.tweens.add({
+      targets: player,
+      scaleX: 1.2,
+      scaleY: 1.2,
+      duration: 250,
+      ease: "Power2",
+      yoyo: true,
+    });
+
     if (isPlayerInTarget(this)) {
-      loadNextLevel(this);
+      showVictoryOverlay();
     }
   }
 }
